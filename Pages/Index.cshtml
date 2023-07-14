@@ -1,0 +1,169 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+ 
+<link rel="stylesheet" href="~/css/calendar.css">
+
+@inject AppDbContext DbContext
+<body>
+    <div class="calendar-container">
+        <div class="calendar-navigation">
+            <button id="prev-month-btn" class="nav-button">&lt;</button>
+            <h1 class="calendar-month-year" id="current-month-year"></h1>
+            <button id="next-month-btn" class="nav-button">&gt;</button>
+        </div>
+
+        <table class="calendar-table">
+            <thead>
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody id="calendar-body"></tbody>
+        </table>
+    </div>
+
+    <script>
+        var product = @Html.Raw(Json.Serialize(Model.Expo));
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const calendarBody = document.getElementById("calendar-body");
+            const prevMonthBtn = document.getElementById("prev-month-btn");
+            const nextMonthBtn = document.getElementById("next-month-btn");
+            const currentMonthYear = document.getElementById("current-month-year");
+            const months = [
+                { name: "January", theme: "New Year" },
+                { name: "February", theme: "Valentine's Day" },
+                { name: "March", theme: "St. Patrick's Day" },
+                { name: "April", theme: "Easter" },
+                { name: "May", theme: "Mother's Day" },
+                { name: "June", theme: "Father's Day" },
+                { name: "July", theme: "Independence Day" },
+                { name: "August", theme: "Back to School" },
+                { name: "September", theme: "Labor Day" },
+                { name: "October", theme: "Halloween" },
+                { name: "November", theme: "Thanksgiving" },
+                { name: "December", theme: "Christmas" }
+            ];
+            let currentMonth = new Date().getMonth();
+            let currentYear = new Date().getFullYear();
+
+            function updateCalendar() {
+                calendarBody.innerHTML = "";
+                const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+                const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+                currentMonthYear.textContent = `${months[currentMonth].name} ${currentYear}`;
+
+                const isMobileResolution = window.innerWidth < 767;
+                let date = 1;
+
+                for (let i = 0; i < 6; i++) {
+                    const row = document.createElement("tr");
+                    for (let j = 0; j < 7; j++) {
+                        const cell = document.createElement("td");
+                        cell.classList.add("cell");
+
+                        if (i === 0 && j < firstDay) {
+                            if (isMobileResolution) break;
+                          const emptyCell = document.createElement("div");
+                            emptyCell.classList.add("empty-cell");
+                            cell.appendChild(emptyCell);
+
+                        } else if (date > totalDays) {
+                          break;
+                          
+                            const emptyCell = document.createElement("div");
+                            emptyCell.classList.add("empty-cell");
+                            cell.appendChild(emptyCell);
+                        } else {
+                            const day = document.createElement("div");
+                            day.classList.add("day");
+                            day.textContent = date;
+                            cell.textContent = date;
+                            const eventTags = document.createElement("div");
+                            eventTags.classList.add("event-tags");
+                            const activityTags = document.createElement("div");
+                            activityTags.classList.add("activity-tags");
+
+                            // Find product for the current date
+                            const currentDate = new Date(currentYear, currentMonth, date);
+                            /*const productForDate = product.find(p => new Date(p.fromdate).getDate() === currentDate.getDate());*/
+                            const productForDate = product.find(p => {
+                                const fromDate = new Date(p.fromdate);
+                                return fromDate.getMonth() === currentMonth && fromDate.getFullYear() === currentYear && fromDate.getDate() === currentDate.getDate();
+                            });
+
+                             
+
+                            var isPast = false;
+                            if(productForDate){
+                                const date = new Date(productForDate.todate)
+                                isPast = date < new Date()
+                            }
+
+
+                            if (productForDate) {
+                                cell.classList.add("has-events");
+                                const activityTag = document.createElement("span"); 
+                                    activityTag.classList.add(isPast ? "activity-tag-past" : "activity-tag");
+
+                                if (!isPast){
+
+                                    const activityLink = document.createElement("a");
+                                    activityLink.href = "https://ezyshare.online/ezyshare-expo/EventDetails?id=" + productForDate.expocode; // Replace with your desired URL
+                                    activityLink.textContent = productForDate.exponame;
+                                    activityLink.target = "_blank";
+                                    activityTag.appendChild(activityLink);
+                                }
+                                else{
+                                  activityTag.textContent = productForDate.exponame;
+                                }
+
+                                activityTags.appendChild(activityTag);
+
+                            }
+
+
+                            cell.appendChild(activityTags);
+                            row.appendChild(cell);
+                            date++;
+                        }
+                        row.appendChild(cell);
+                    }
+                    calendarBody.appendChild(row);
+                }
+            }
+
+            prevMonthBtn.addEventListener("click", function () {
+                if (currentMonth === 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                } else {
+                    currentMonth--;
+                }
+                updateCalendar();
+            });
+
+            nextMonthBtn.addEventListener("click", function () {
+                if (currentMonth === 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                } else {
+                    currentMonth++;
+                }
+                updateCalendar();
+            });
+
+            updateCalendar();
+        });
+    </script>
+</body>

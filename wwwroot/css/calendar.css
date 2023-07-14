@@ -1,0 +1,269 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+  a:hover {
+  text-decoration: none; /* Remove underline on hover */
+  /* Add your custom styles for highlighting or adding a shadow */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+header,
+footer {
+  display: none;
+}
+
+.navbar-brand {
+  display: none;
+}
+
+.calendar-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.empty-cell:empty {
+  display: none;
+}
+
+.calendar-navigation {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.nav-button {
+  font-family: inherit;
+  font-size: 20px;
+  color: #333333;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.calendar-month-year {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin: 0 16px;
+}
+
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+  .calendar-table th,
+  .calendar-table td {
+    color: black;
+    border: 1px solid lightgray;
+    text-align: left;
+    vertical-align: text-bottom;
+    padding: 8px;
+    height: 50px; /* Set a fixed height */
+    width: 50px; /* Set a fixed width */
+    min-width: 50px;
+    min-height: 50px;
+    box-sizing: border-box;
+  }
+
+  .calendar-table th {
+    font-weight: bold;
+  }
+
+.activity-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+}
+
+.activity-tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: #000;
+  padding: 2px 5px;
+  border-radius: 3px;
+  width: 100%;
+  background: #f8a024;
+  cursor: pointer;
+}
+
+.activity-tag-past {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 3px;
+  width: 100%;
+  background: #c2c2c2;
+  cursor: default;
+}
+
+.activity-tag.meeting {
+  background-color: #4a90e2;
+}
+
+.activity-tag.birthday {
+  background-color: #f0932b;
+}
+
+.tooltip-content {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+  .tooltip-content li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    font-size: 12px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+    .tooltip-content li:last-child {
+      border-bottom: none;
+    }
+
+.tooltip-time {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.tooltip {
+  position: absolute;
+  display: flex;
+  transform: translateY(10px);
+  z-index: 1;
+  background: white;
+}
+
+@media only screen and (max-width: 767px) {
+  .calendar-navigation {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+    left:0;
+    background: white;
+  }
+
+  table{
+      transform:translateY(40px)
+  }
+
+  #prev-month-btn.nav-button {
+    position: fixed;
+    left: 0;
+    padding: 0 10px;
+    margin-left: 100px;
+  }
+
+  #next-month-btn.nav-button {
+    position: fixed;
+    right: 0;
+    padding: 0 10px;
+    margin-right: 100px;
+  }
+
+  .tooltip {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    border-radius: 4px;
+    z-index: 1;
+  }
+
+    .tooltip:before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px;
+      border-style: solid;
+      border-color: transparent transparent #ffffff transparent;
+    }
+
+  /* .cell*/
+  .cell:not(:has(.empty-cells)) {
+    position: relative;
+    cursor: pointer;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: flex;
+    margin: 0;
+  }
+
+  .cell:has(.empty-cells) {
+    display: none;
+  }
+
+  .calendar-table td .empty-cell:empty {
+    display: none;
+  }
+
+  .calendar-table th,
+  .calendar-table td {
+    display: none;
+  }
+
+    .calendar-table th,
+    .calendar-table td .cell .empty-cell:empty {
+      display: none;
+    }
+
+  .activity-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0 10px 10px 5px;
+    justify-content: flex-start;
+    gap: 4px;
+    width: 100%;
+  }
+
+  body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  th {
+    display: none;
+  }
+
+  tbody {
+    overflow-y: scroll;
+  }
+}
