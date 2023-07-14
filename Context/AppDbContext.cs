@@ -19,7 +19,7 @@ namespace ezyshare_calendar.Context
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      optionsBuilder.UseSqlServer("Data Source=misoplatform.database.windows.net; Initial Catalog=ISOERP_PLATFORM_SCLUB2UEXPO_LICENSE;User Id=officemisoplatform;Password=office#misoplatform#123456");
+      optionsBuilder.UseSqlServer("");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
