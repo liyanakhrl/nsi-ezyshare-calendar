@@ -13,9 +13,9 @@ a {
 }
 
   a:hover {
-  text-decoration: none; /* Remove underline on hover */
-  /* Add your custom styles for highlighting or adding a shadow */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    text-decoration: none; /* Remove underline on hover */
+    /* Add your custom styles for highlighting or adding a shadow */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   }
 
 header,
@@ -66,6 +66,48 @@ footer {
   margin: 0 16px;
 }
 
+th:first-child {
+  border-top-left-radius: 10px;
+}
+
+th:last-child {
+  border-top-right-radius: 10px;
+}
+
+td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+td:not(:first-child) {
+  border-left: 1px solid #ddd;
+}
+
+td:not(:last-child) {
+  border-right: 1px solid #ddd;
+}
+
+tr:not(:first-child) td {
+  border-top: 1px solid #ddd;
+}
+
+tr:not(:last-child) td {
+  border-bottom: 1px solid #ddd;
+}
+
+ 
+
+tr:first-child td:last-child {
+  border-top-right-radius: 10px;
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
 .calendar-table {
   width: 100%;
   border-collapse: collapse;
@@ -74,7 +116,7 @@ footer {
   .calendar-table th,
   .calendar-table td {
     color: black;
-    border: 1px solid lightgray;
+    background-color: #f9f9f9;
     text-align: left;
     vertical-align: text-bottom;
     padding: 8px;
@@ -87,6 +129,9 @@ footer {
 
   .calendar-table th {
     font-weight: bold;
+    text-align: center;
+    background-color: #c2c2c2;
+    vertical-align: middle;
   }
 
 .activity-tags {
@@ -125,6 +170,17 @@ footer {
 
 .activity-tag.birthday {
   background-color: #f0932b;
+}
+
+td.prev-month,
+td.next-month {
+  background: #E5E4E2;
+  border-radius: 0;
+  background-color: #DCDCDC;
+}
+
+tr:last-child .next-month {
+  display: none;
 }
 
 .tooltip-content {
@@ -167,26 +223,35 @@ footer {
     width: 100%;
     z-index: 1;
     top: 0;
-    left:0;
-    background: white;
+    left: 0;
+    background: #f8a024;
+    color: white;
+    padding: 10px;
   }
 
-  table{
-      transform:translateY(40px)
+  table {
+    transform: translateY(40px);
   }
 
   #prev-month-btn.nav-button {
     position: fixed;
     left: 0;
     padding: 0 10px;
-    margin-left: 100px;
+    font-weight: bold;
+    color: white;
   }
 
   #next-month-btn.nav-button {
     position: fixed;
     right: 0;
     padding: 0 10px;
-    margin-right: 100px;
+    font-weight: bold;
+    color: white;
+  }
+
+  td.cell.prev-month,
+  td.cell.next-month {
+    display: none;
   }
 
   .tooltip {

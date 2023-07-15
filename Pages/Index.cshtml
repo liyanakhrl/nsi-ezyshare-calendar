@@ -4,7 +4,7 @@
     ViewData["Title"] = "Home page";
 }
 
- 
+
 <link rel="stylesheet" href="~/css/calendar.css">
 
 @inject AppDbContext DbContext
@@ -19,13 +19,13 @@
         <table class="calendar-table">
             <thead>
                 <tr>
-                    <th>Sun</th>
-                    <th>Mon</th>
-                    <th>Tue</th>
-                    <th>Wed</th>
-                    <th>Thu</th>
-                    <th>Fri</th>
-                    <th>Sat</th>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
                 </tr>
             </thead>
             <tbody id="calendar-body"></tbody>
@@ -61,10 +61,10 @@
                 calendarBody.innerHTML = "";
                 const firstDay = new Date(currentYear, currentMonth, 1).getDay();
                 const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+                const prevMonthTotalDays = new Date(currentYear, currentMonth, 0).getDate(); // Total days of previous month
                 currentMonthYear.textContent = `${months[currentMonth].name} ${currentYear}`;
-
-                const isMobileResolution = window.innerWidth < 767;
                 let date = 1;
+                let nextMonthDays = 0;
 
                 for (let i = 0; i < 6; i++) {
                     const row = document.createElement("tr");
@@ -73,17 +73,14 @@
                         cell.classList.add("cell");
 
                         if (i === 0 && j < firstDay) {
-                            if (isMobileResolution) break;
-                          const emptyCell = document.createElement("div");
-                            emptyCell.classList.add("empty-cell");
-                            cell.appendChild(emptyCell);
-
+                            const prevMonthDate = prevMonthTotalDays - (firstDay - j) + 1;
+                            cell.textContent = prevMonthDate;
+                            cell.classList.add("prev-month");
                         } else if (date > totalDays) {
-                          break;
-                          
-                            const emptyCell = document.createElement("div");
-                            emptyCell.classList.add("empty-cell");
-                            cell.appendChild(emptyCell);
+                            const nextMonthDate = date - totalDays + nextMonthDays;
+                            nextMonthDays++;
+                            cell.textContent = nextMonthDate;
+                            cell.classList.add("next-month");
                         } else {
                             const day = document.createElement("div");
                             day.classList.add("day");
@@ -102,10 +99,10 @@
                                 return fromDate.getMonth() === currentMonth && fromDate.getFullYear() === currentYear && fromDate.getDate() === currentDate.getDate();
                             });
 
-                             
+
 
                             var isPast = false;
-                            if(productForDate){
+                            if (productForDate) {
                                 const date = new Date(productForDate.todate)
                                 isPast = date < new Date()
                             }
@@ -113,10 +110,10 @@
 
                             if (productForDate) {
                                 cell.classList.add("has-events");
-                                const activityTag = document.createElement("span"); 
-                                    activityTag.classList.add(isPast ? "activity-tag-past" : "activity-tag");
+                                const activityTag = document.createElement("span");
+                                activityTag.classList.add(isPast ? "activity-tag-past" : "activity-tag");
 
-                                if (!isPast){
+                                if (!isPast) {
 
                                     const activityLink = document.createElement("a");
                                     activityLink.href = "https://ezyshare.online/ezyshare-expo/EventDetails?id=" + productForDate.expocode; // Replace with your desired URL
@@ -124,8 +121,8 @@
                                     activityLink.target = "_blank";
                                     activityTag.appendChild(activityLink);
                                 }
-                                else{
-                                  activityTag.textContent = productForDate.exponame;
+                                else {
+                                    activityTag.textContent = productForDate.exponame;
                                 }
 
                                 activityTags.appendChild(activityTag);
