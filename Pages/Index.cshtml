@@ -98,13 +98,14 @@
                                 const fromDate = new Date(p.fromdate);
                                 return fromDate.getMonth() === currentMonth && fromDate.getFullYear() === currentYear && fromDate.getDate() === currentDate.getDate();
                             });
-
-
+                             
 
                             var isPast = false;
                             if (productForDate) {
-                                const date = new Date(productForDate.todate)
-                                isPast = date < new Date()
+                                const currentDate = new Date();
+                                currentDate.setHours(23, 59, 0, 0); // Set time to 11:59 PM
+                                const productDate = new Date(productForDate.todate);
+                                isPast = productDate < currentDate;
                             }
 
 
