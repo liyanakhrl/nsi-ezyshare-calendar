@@ -105,6 +105,7 @@
                                 const currentDate = new Date();
                                 currentDate.setHours(23, 59, 0, 0); // Set time to 11:59 PM
                                 const productDate = new Date(productForDate.todate);
+                                productDate.setHours(23, 59, 0, 0);
                                 isPast = productDate < currentDate;
                             }
 
