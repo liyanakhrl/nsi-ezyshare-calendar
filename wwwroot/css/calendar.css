@@ -1,7 +1,7 @@
 body {
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   padding: 0;
   margin: 0;
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
@@ -31,11 +31,9 @@ footer {
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin: 0 auto; 
-  -webkit-overflow-scrolling: touch; 
+  margin: 0 auto;
+  -webkit-overflow-scrolling: touch;
 }
-
-
 
 .calendar-header {
   display: flex;
@@ -130,9 +128,9 @@ tr:last-child td:last-child {
     vertical-align: text-bottom;
     padding: 8px;
     height: 12vh; /* Set a fixed height */
-  width: 12vw; /* Set a fixed width */
-  box-sizing: border-box;
-}
+    width: 12vw; /* Set a fixed width */
+    box-sizing: border-box;
+  }
 
   .calendar-table th {
     font-weight: bold;
@@ -151,18 +149,16 @@ tr:last-child td:last-child {
   gap: 4px;
 }
 
- 
- 
-  .activity-tag {
-    font-size: 12px;
-    font-weight: 600;
-    color: black;
-    padding: 2px 5px;
-    border-radius: 3px;
-    width: 100%;
-    background: #f8a024;
-    cursor: pointer;
-  }
+.activity-tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: black;
+  padding: 2px 5px;
+  border-radius: 3px;
+  width: 100%;
+  background: #f8a024;
+  cursor: pointer;
+}
 
   .activity-tag:hover {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -248,7 +244,7 @@ tr:last-child .next-month {
 
 /* Style the popup */
 .popup {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -281,10 +277,15 @@ tr:last-child .next-month {
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
+    width: 100%;
   }
+
 ul {
   list-style-type: none;
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 li {
@@ -292,11 +293,20 @@ li {
   margin: 5px;
   padding: 5px 10px;
   border: 1px solid #ccc;
+  border-radius: 5px;
   cursor: pointer;
+  transition: box-shadow 0.3s, background-color 0.3s; /* Adding transition for smooth effect */
 }
 
-.clicked {
-  background-color: #f0f0f0;
+  li:hover {
+    background-color: #f0f0f0; /* Gold color on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+    font-weight: bold;
+  }
+
+.selected-tag {
+  background-color: #f8a024;
+  font-weight: bold;
 }
 
 @media only screen and (max-width: 767px) {
@@ -362,7 +372,9 @@ li {
   }
 
   .activity-tag-past,
-  .activity-tag { 
+  .activity-tag {
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
   }
 
@@ -402,20 +414,17 @@ li {
     margin: 0;
   }
 
-
   td.cell .activity-tags:empty {
-    height:10px;
+    height: 10px;
   }
 
-
-  td.cell{
-      height:30px
+  td.cell {
+    height: 30px;
   }
 
-  td.cell.has-events{
-      height:50px;
-  }
-  
+    td.cell.has-events {
+      height: 50px;
+    }
 
   tr td {
     border: 1px solid #c2c2c2;
@@ -494,11 +503,18 @@ li {
   .popup {
     width: 80%;
     max-width: 300px;
-    transform: translate(-50%, -150%);
+    position:fixed;
     z-index: 1;
   }
 
-  #select-btn{
-      width:100%;
+  #select-btn {
+    width: 100%;
+  }
+  li:hover{
+      background:#c2c2c2;
+  }
+  .selected-tag {
+    background-color: #f8a024;
+    font-weight: bold;
   }
 }
